@@ -21,7 +21,7 @@ $(function() {
          * allFeeds in app.js to be an empty array and refresh the
          * page?
          */
-        it('are defined', function() {
+        it('feeds are defined', function() {
             expect(allFeeds).toBeDefined();
             expect(allFeeds.length).not.toBe(0);
         });
@@ -51,38 +51,94 @@ $(function() {
                 expect(allFeeds[i].name).toBeDefined();
                 expect(allFeeds[i].name.length).not.toBe(0);
             }
-
         });
     });
 
 
     /* TODO: Write a new test suite named "The menu" */
-
-        /* TODO: Write a test that ensures the menu element is
+        describe('The menu', function()
+        {
+             /* TODO: Write a test that ensures the menu element is
          * hidden by default. You'll have to analyze the HTML and
          * the CSS to determine how we're performing the
          * hiding/showing of the menu element.
          */
-
-         /* TODO: Write a test that ensures the menu changes
+           it('menu function is hidden', function()
+           {
+               expect($('body').hasClass('menu-hidden')).toEqual(true);
+           });
+           //Toggles on click event if menu apperas or disappears
+             /* TODO: Write a test that ensures the menu changes
           * visibility when the menu icon is clicked. This test
           * should have two expectations: does the menu display when
           * clicked and does it hide when clicked again.
           */
-
+           it('working toggle on click event', function(){
+               // calls the class of menu-icon -link
+               $('.menu-icon-link').trigger('click');
+               expect($('body').hasClass('menu-hidden')).toBe(false);
+               $('.menu-icon-link').trigger('click');
+              expect($('body').hasClass('menu-hidden')).toBe(true);
+           })
+        });
+       
     /* TODO: Write a new test suite named "Initial Entries" */
 
-        /* TODO: Write a test that ensures when the loadFeed
+    describe('Initial Entries', function()
+    {
+        //assign 
+        beforeEach(function(done) 
+        {
+            loadFeed(0, function()
+            {
+                done();
+            });
+        });
+    /* TODO: Write a test that ensures when the loadFeed
          * function is called and completes its work, there is at least
          * a single .entry element within the .feed container.
          * Remember, loadFeed() is asynchronous so this test will require
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
+        it('Define if feed has atleast one entry', function()
+        {
+            expect($('.feed .entry').length).toBeGreaterThan(0);
+        });
 
+    });
+        
     /* TODO: Write a new test suite named "New Feed Selection" */
-
-        /* TODO: Write a test that ensures when a new feed is loaded
+        describe('New feed selection', function()
+        {
+            var firstFeed, secondFeed;
+            beforeEach(function(done)
+            {
+                loadFeed(1, function(){
+                    //Tests if first feed is loaded 
+                    console.log("first feed loading succesful");
+                    //loads first entry and checks 
+                    firstFeed=$('feed').html();
+                    loadFeed(2, function(){
+                        console.log("second feed loading successful");
+                        done();
+                    });
+                });
+            });
+            afterEach(function()
+            {
+                loadFeed(0);
+            });
+            //Tests to see if two entries are not equal 
+             /* TODO: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+            if('checks if two feeds are different', function()
+            {
+              secondFeed=$('feed').html();
+              expect(firstFeed).not.toEqual(secondFeed);
+            });
+        });
+
+       
 }());
