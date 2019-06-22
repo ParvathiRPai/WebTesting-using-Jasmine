@@ -110,9 +110,11 @@ $(function() {
          * Remember, loadFeed() is asynchronous so this test will require
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
-        it('Define if feed has atleast one entry', function()
+        it('Define if feed has atleast one entry', function(done)
         {
-            expect($('.feed .entry').length).toBeGreaterThan(0);
+            var entry = document.querySelectorAll('.feed .entry');
+            expect(entry.length).toBeGreaterThan(0); //check for at least one entry
+            done();
         });
 
     });
@@ -120,35 +122,31 @@ $(function() {
         /* Test suite named "New Feed Selection" */
         describe('New feed selection', function()
         {
-            var firstFeed, secondFeed;
+            var firstFeed;
             beforeEach(function(done)
             {
-                loadFeed(1, function(){
+                loadFeed(0, function(){
                     //Tests if first feed is loaded 
                     console.log("first feed loading succesful");
                     //loads first entry and checks 
-                    firstFeed=$('feed').html();
-                    loadFeed(2, function(){
+                    firstFeed=document.querySelector('.feed').innerHTML;
+                    loadFeed(1, function(){
                         console.log("second feed loading successful");
                         done();
                     });
                 });
             });
-            afterEach(function()
-            {
-                loadFeed(0);
-            });
-            
             //Tests to see if two entries are not equal 
         
         /* Test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
-            if('checks if two feeds are different', function()
+            if('checks if two feeds are different', function(done)
             {
-              secondFeed=$('feed').html();
+              var secondFeed= document.querySelector(".feed").innerHTML;
               expect(firstFeed).not.toEqual(secondFeed);
+              done();
             });
         });   
 }());
