@@ -20,6 +20,10 @@ var allFeeds = [
     }, {
         name: 'Linear Digressions',
         url: 'http://feeds.feedburner.com/udacity-linear-digressions'
+    }, 
+    {
+        name: ' Testing',
+        url: 'https://parvathirpai.github.io/WebTesting-using-Jasmine/js/app.js'
     }
 ];
 
