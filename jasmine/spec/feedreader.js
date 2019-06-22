@@ -62,9 +62,11 @@ $(function() {
          * the CSS to determine how we're performing the
          * hiding/showing of the menu element.
          */
+         const body=document.getElementsByTagName('body')[0];
+         const menuIcon=document.getElementsByClassName('menu-icon-link')[0];
            it('menu function is hidden', function()
            {
-               expect($('body').hasClass('menu-hidden')).toEqual(true);
+               expect(body.classList.contains('menu-hidden')).toBe(true);
            });
 
         //Toggles on click event if menu apperas or disappears
@@ -76,10 +78,16 @@ $(function() {
         */
            it('working toggle on click event', function(){
                // calls the class of menu-icon -link
-               $('.menu-icon-link').trigger('click');
-               expect($('body').hasClass('menu-hidden')).toBe(false);
-               $('.menu-icon-link').trigger('click');
-              expect($('body').hasClass('menu-hidden')).toBe(true);
+              expect(body.classList.contains('menu-hidden')).toBe(true);
+              //simulates click on the menu icon 
+              menuIcon.click();
+            //checks for the class menu-hidden is removed from body tag after the click
+            expect(body.classList.contains('menu-hidden')).toBe(false);
+            menuIcon.click(); //Again simulates click on the menu icon
+
+            //Again checks for the class menu-hidden is added back to body tag after the another click
+            expect(body.classList.contains('menu-hidden')).toBe(true);
+
            })
         });
        
